@@ -72,7 +72,8 @@ Matrix * init_matrix(int * &minimals) {
         matrix->matrix_width = getNum<int>(0, INT_MAX);
     }
     catch (const std::exception &e) {
-        remove_matrix(matrix);
+        remove_matrix(*matrix);
+        delete matrix;
         std::cerr << e.what() << std::endl;
         throw;
     }
@@ -86,7 +87,8 @@ Matrix * init_matrix(int * &minimals) {
             try {
                 x = getNum<int>(INT_MIN, INT_MAX);
             } catch (const std::exception &e) {
-                remove_matrix(matrix);
+                remove_matrix(*matrix);
+                delete matrix;
                 delete[] minimals;
                 std::cerr << e.what() << std::endl;
                 throw;
@@ -115,9 +117,8 @@ Matrix *perform_task(const int *minimals, const Matrix *matrix) {
     return result;
 }
 
-void remove_matrix(Matrix *matrix) {
-    delete[] matrix->height;
-    delete[] matrix->length;
-    delete[] matrix->value;
-    delete matrix;
+void remove_matrix(Matrix &matrix) {
+    delete[] matrix.height;
+    delete[] matrix.length;
+    delete[] matrix.value;
 }

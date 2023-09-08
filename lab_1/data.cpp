@@ -16,6 +16,8 @@ void operation() {
     print_task(minimals, *result);
 
     delete[] minimals;
-    remove_matrix(matrix);
-    remove_matrix(result);
+    remove_matrix(*matrix);
+    delete matrix;
+    remove_matrix(*result);
+    delete result;
 }
