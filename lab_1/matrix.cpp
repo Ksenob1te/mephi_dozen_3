@@ -1,5 +1,6 @@
 #include "matrix.h"
 #include <iomanip>
+#include "climits"
 
 
 void print_matrix(const Matrix *matrix) {
