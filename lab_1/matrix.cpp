@@ -3,13 +3,13 @@
 #include "climits"
 
 
-void print_matrix(const Matrix *matrix) {
+void print_matrix(const Matrix &matrix) {
     int count = 0;
-    for (int i = 0; i < matrix->matrix_height; ++i) {
-        for (int j = 0; j < matrix->matrix_width; ++j) {
-            if (matrix->height[count] == i && matrix->length[count] == j) {
-                std::cout << std::right << std::setw(3) << matrix->value[count];
-                if (count + 1 != matrix->counter) count++;
+    for (int i = 0; i < matrix.matrix_height; ++i) {
+        for (int j = 0; j < matrix.matrix_width; ++j) {
+            if (matrix.height[count] == i && matrix.length[count] == j) {
+                std::cout << std::right << std::setw(3) << matrix.value[count];
+                if (count + 1 != matrix.counter) count++;
             } else {
                 std::cout << std::right << std::setw(3) << 0;
             }
@@ -18,16 +18,16 @@ void print_matrix(const Matrix *matrix) {
     }
 }
 
-void print_task(const int *minimals, const Matrix *matrix) {
+void print_task(const int *minimals, const Matrix &matrix) {
     int count = 0;
-    for (int i = 0; i < matrix->matrix_height; ++i) {
+    for (int i = 0; i < matrix.matrix_height; ++i) {
         int current_minimal = minimals[i];
         bool fount_minimal = false;
-        for (int j = 0; j < matrix->matrix_width; ++j) {
-            if (matrix->height[count] == i && matrix->length[count] == j) {
-                if (current_minimal == matrix->value[count]) fount_minimal = true;
-                if (fount_minimal) std::cout << std::right << std::setw(3) << matrix->value[count];
-                if (count + 1 != matrix->counter) count++;
+        for (int j = 0; j < matrix.matrix_width; ++j) {
+            if (matrix.height[count] == i && matrix.length[count] == j) {
+                if (current_minimal == matrix.value[count]) fount_minimal = true;
+                if (fount_minimal) std::cout << std::right << std::setw(3) << matrix.value[count];
+                if (count + 1 != matrix.counter) count++;
             } else {
                 if (current_minimal == 0) fount_minimal = true;
                 if (fount_minimal) std::cout << std::right << std::setw(3) << 0;
@@ -45,17 +45,17 @@ int * resize(const int *array, int old_size, int new_size) {
     return expanded_array;
 }
 
-void add_element(Matrix *matrix, int height, int length, int value) {
-    if (matrix->counter >= matrix->current_size) {
-        matrix->height = resize(matrix->height, matrix->current_size, matrix->current_size + 10);
-        matrix->length = resize(matrix->length, matrix->current_size, matrix->current_size + 10);
-        matrix->value = resize(matrix->value, matrix->current_size, matrix->current_size + 10);
-        matrix->current_size += 10;
+void add_element(Matrix &matrix, int height, int length, int value) {
+    if (matrix.counter >= matrix.current_size) {
+        matrix.height = resize(matrix.height, matrix.current_size, matrix.current_size + 10);
+        matrix.length = resize(matrix.length, matrix.current_size, matrix.current_size + 10);
+        matrix.value = resize(matrix.value, matrix.current_size, matrix.current_size + 10);
+        matrix.current_size += 10;
     }
-    matrix->height[matrix->counter] = height;
-    matrix->length[matrix->counter] = length;
-    matrix->value[matrix->counter] = value;
-    ++(matrix->counter);
+    matrix.height[matrix.counter] = height;
+    matrix.length[matrix.counter] = length;
+    matrix.value[matrix.counter] = value;
+    ++(matrix.counter);
 }
 
 Matrix * init_matrix(int * &minimals) {
@@ -92,7 +92,7 @@ Matrix * init_matrix(int * &minimals) {
                 throw;
             }
             if (minimals[i] > x) minimals[i] = x;
-            if (x != 0) add_element(matrix, i, j, x);
+            if (x != 0) add_element(*matrix, i, j, x);
         }
     }
     return matrix;
@@ -110,7 +110,7 @@ Matrix *perform_task(const int *minimals, const Matrix *matrix) {
 
     for (int i = 0; i < matrix->counter; i++) {
         if (minimals[matrix->height[i]] <= matrix->value[i])
-            add_element(result, matrix->height[i], matrix->length[i], matrix->value[i]);
+            add_element(*result, matrix->height[i], matrix->length[i], matrix->value[i]);
     }
     return result;
 }

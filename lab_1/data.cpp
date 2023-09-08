@@ -11,9 +11,9 @@ void operation() {
 //    }
 
     std::cout << "Input matrix:\n";
-    print_matrix(matrix);
+    print_matrix(*matrix);
     std::cout << "\nResult matrix:\n";
-    print_task(minimals, result);
+    print_task(minimals, *result);
 
     delete[] minimals;
     remove_matrix(matrix);

@@ -35,8 +35,8 @@ T getNum(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::
 
 Matrix * init_matrix(int * &minimals);
 Matrix *perform_task(const int *minimals, const Matrix *matrix);
-void print_task(const int *minimals, const Matrix *matrix);
-void print_matrix(const Matrix *matrix);
+void print_task(const int *minimals, const Matrix &matrix);
+void print_matrix(const Matrix &matrix);
 void remove_matrix(Matrix *matrix);
 
 #endif //MEPHI_DOZEN_3_MATRIX_H
