@@ -3,8 +3,14 @@
 
 void operation() {
     int *minimals;
-    Matrix *matrix = init_matrix(minimals);
-    Matrix *result = perform_task(minimals, matrix);
+    Matrix *matrix;
+    Matrix *result;
+    try {
+        matrix = init_matrix(minimals);
+        result = perform_task(minimals, matrix);
+    }     catch (const std::exception &e) {
+        return;
+    }
 
 //    for (int i = 0; i < matrix->counter; i++) {
 //        std::cout << matrix->height[i] << " " << matrix->length[i] << " " << matrix->value[i] << std::endl;
