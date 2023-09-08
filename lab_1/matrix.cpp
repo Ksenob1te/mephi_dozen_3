@@ -116,5 +116,5 @@ void remove_matrix(Matrix *matrix) {
     delete[] matrix->height;
     delete[] matrix->length;
     delete[] matrix->value;
-    delete[] matrix;
+    delete matrix;
 }
