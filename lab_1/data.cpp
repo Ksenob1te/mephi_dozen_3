@@ -6,9 +6,9 @@ void operation() {
     Matrix *matrix = init_matrix(minimals);
     Matrix *result = perform_task(minimals, matrix);
 
-    for (int i = 0; i < matrix->counter; i++) {
-        std::cout << matrix->height[i] << " " << matrix->length[i] << " " << matrix->value[i] << std::endl;
-    }
+//    for (int i = 0; i < matrix->counter; i++) {
+//        std::cout << matrix->height[i] << " " << matrix->length[i] << " " << matrix->value[i] << std::endl;
+//    }
 
     std::cout << "Input matrix:\n";
     print_matrix(matrix);
