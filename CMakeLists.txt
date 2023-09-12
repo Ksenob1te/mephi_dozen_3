@@ -8,3 +8,5 @@ add_executable(lab_1 lab_1/data.cpp lab_1/data.h
         lab_1/main.cpp
         lab_1/matrix.cpp
         lab_1/matrix.h)
+add_executable(lab_2 lab_2/main.cpp)
+add_executable(menu menu/menu.cpp)
