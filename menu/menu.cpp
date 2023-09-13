@@ -1,50 +1,67 @@
 #include <iostream>
-#include <conio.h>//For _getch().
-#include ""
+#include <conio.h>
+#include <string>
+#include <cstdlib>
 
-//https://stackoverflow.com/questions/24708700/c-detect-when-user-presses-arrow-key
-#define KEY_UP 72       //Up arrow character
-#define KEY_DOWN 80    //Down arrow character
-#define KEY_ENTER '\r'//Enter key charatcer
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_ENTER '\r'
+
+void print_menu(std::string * &commands, int length, int selected) {
+    for (int i = 0; i < length; ++i) {
+        if (i == selected) std::cout << "\x1B[33m";
+        std::cout << commands[i] << std::endl;
+        if (i == selected) std::cout << "\033[0m";
+    }
+}
 
 int main() {
-    int selected = 0;    //Keeps track of which option is selected.
-    int numChoices = 2; //The number of choices we have.
-    bool selecting = true;//True if we are still waiting for the user to press enter.
-    bool updated = false;//True if the selected value has just been updated.
+    int selected = 0;
+    int numChoices = 2;
+    bool selecting = true;
+    bool updated = false;
 
-    //Output options
-    std::cout << "A. Option 1\n";
-    std::cout << "B. Option 2\n";
 
-    char c; //Store c outside of loop for efficiency.
-    while (selecting) { //As long as we are selecting...
-        switch ((c = (char) _getch())) { //Check value of the last inputed character.
-            case KEY_UP:
-                if (selected > 0) { //Dont decrement if we are at the first option.
-                    --selected;
-                    updated = true;
-                }
-                break;
-            case KEY_DOWN:
-                if (selected < numChoices - 1) { //Dont increment if we are at the last option.
-                    ++selected;
-                    updated = true;
-                }
-                break;
-            case KEY_ENTER:
-                //We are done selecting the option.
-                selecting = false;
-                break;
-            default: break;
-        }
-        if (updated) { //Lets us know what the currently selected value is.
-            std::cout << "Option " << (selected + 1) << " is selected.\n";
-            updated = false;
-        }
-    }
-    //Lets us know what we ended up selecting.
-    std::cout << "Selected " << (selected + 1) << '\n';
+
+//    std::cout << "A. Option 1\n";
+//    std::cout << "B. Option 2\n";
+
+    auto *commands = new std::string[10];
+    commands[0] = "1. hello";
+    commands[1] = "2. hello2";
+    commands[2] = "3. hello3";
+    commands[3] = "4. hello4";
+    commands[4] = "5. hello5";
+
+    print_menu(commands, 5, 2);
+    int x;
+    std::cin >> x;
+//    char c;
+//    while (selecting) {
+//        switch ((c = (char) _getch())) {
+//            case KEY_UP:
+//                if (selected > 0) {
+//                    --selected;
+//                    updated = true;
+//                }
+//                break;
+//            case KEY_DOWN:
+//                if (selected < numChoices - 1) {
+//                    ++selected;
+//                    updated = true;
+//                }
+//                break;
+//            case KEY_ENTER:
+//                selecting = false;
+//                break;
+//            default: break;
+//        }
+//        if (updated) {
+//            std::cout << "Option " << (selected + 1) << " is selected.\n";
+//            updated = false;
+//        }
+//    }
+//    std::cout << "Selected " << (selected + 1) << '\n';
     return 0;
 
 }
