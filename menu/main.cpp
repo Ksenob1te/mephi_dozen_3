@@ -44,6 +44,9 @@ int main(void) {
             std::cout << c << std::endl;
             continue;
         }
+        if (c == '\n') {
+            printf("ENTER\n");
+        }
 
         // if backspace
         if (c == 0x7f) {
