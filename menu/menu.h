@@ -1,13 +1,12 @@
 #ifndef MEPHI_DOZEN_3_MENU_H
 #define MEPHI_DOZEN_3_MENU_H
 
+#include "system.h"
 #include "cstring"
 #include "iostream"
-
-
-#define UP_ARROW 72
-#define DOWN_ARROW 80
-#define ENTER 
+#if SYSTEM == 0
+#include <termios.h>
+#endif
 
 
 class Component {
@@ -68,7 +67,12 @@ private:
     void emit_type_event(char key);
     void draw();
 
+#if SYSTEM == 0
+termios oldtio, newtio;
+#endif
+
 public:
+    void init_termios();
     int selected;
     void menu_handler();
     Menu * add_component(void (*func) (), std::string label);

@@ -10,8 +10,27 @@ add_executable(lab_1 lab_1/data.cpp lab_1/data.h
         lab_1/matrix.cpp
         lab_1/matrix.h)
 add_executable(lab_2 lab_2/main.cpp)
-add_executable(menu menu/colors.h
+
+
+set(MENU_SET menu/colors.h
         menu/menu.cpp
         menu/menu.h
         menu/main.cpp
-        menu/colors.cpp)
+        menu/colors.cpp
+        menu/system.h
+        menu/character.h
+)
+
+if (WIN32)
+    add_executable(menu
+            ${MENU_SET}
+            menu/windows/input_char.cpp
+            menu/windows/input_char.h)
+endif (WIN32)
+
+if (UNIX)
+    add_executable(menu
+            ${MENU_SET}
+            menu/linux/input_char.cpp
+            menu/linux/input_char.h)
+endif (UNIX)
