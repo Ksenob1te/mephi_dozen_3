@@ -22,9 +22,9 @@ int main()
 {
 // Black magic to prevent Linux from buffering keystrokes.
     struct termios t;
-    tcgetattr(STDIN_FILENO, &t);
+    tcgetattr(0, &t);
     t.c_lflag &= ~ICANON;
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);
+    tcsetattr(0, TCSANOW, &t);
 
 // Once the buffering is turned off, the rest is simple.
     cout << "Enter a character: ";
