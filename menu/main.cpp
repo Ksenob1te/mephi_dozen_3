@@ -4,6 +4,13 @@
 #include "system.h"
 
 int main() {
+#if SYSTEM == 0
+    struct termios t;
+    tcgetattr(0, &t);
+    t.c_lflag &= ~ICANON;
+    t.c_lflag &= ~ECHO;
+    tcsetattr(0, TCSANOW, &t);
+#endif
     char c;
     while (1) {
         Character::Code test = get_char(c);
