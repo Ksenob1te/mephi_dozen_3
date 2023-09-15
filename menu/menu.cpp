@@ -19,5 +19,11 @@ void Button :: render(bool selected) {
         std::cout << this->label << std::endl;
 }
 
+void Button ::event(char button) {
+
+}
+
+
+
 
 

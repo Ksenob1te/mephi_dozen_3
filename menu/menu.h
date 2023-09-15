@@ -4,6 +4,12 @@
 #include "cstring"
 #include "iostream"
 
+
+#define UP_ARROW 72
+#define DOWN_ARROW 80
+#define ENTER 
+
+
 class Component {
 protected:
     bool enabled;
@@ -39,7 +45,7 @@ public:
     explicit Button(std::string &str) : Component(str), on_action_callback(nullptr) {};
     ~Button() = default;
     void render(bool selected) override;
-    void event(char button);
+    void event(char button) override;
     void on_action(void on_action_callback(void));
 };
 
