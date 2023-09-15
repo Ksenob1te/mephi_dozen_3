@@ -16,6 +16,7 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include "iostream"
 #include <unistd.h>
 #include <termios.h>
 
@@ -35,9 +36,12 @@ int main(void) {
 
         // is this an escape sequence?
         if (c == 27) {
+            std::cout << c << " ";
             // "throw away" next two characters which specify escape sequence
             c = getchar();
+            std::cout << c << " ";
             c = getchar();
+            std::cout << c << std::endl;
             continue;
         }
 
