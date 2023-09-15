@@ -19,7 +19,6 @@ Character::Code get_char(char &c) {
     }
     if (c == '\n')
         return Character::ENTER;
-
     if (c == 0x7f)
         return Character::BACKSPACE;
 
