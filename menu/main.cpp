@@ -14,22 +14,51 @@
 //    return 0;
 //}
 
-#include <iostream>
+#include <cstdlib>
+#include <cstdio>
+#include <unistd.h>
 #include <termios.h>
 
-using namespace std;
-int main()
-{
-// Black magic to prevent Linux from buffering keystrokes.
-    struct termios t;
-    tcgetattr(0, &t);
-    t.c_lflag &= ~ICANON;
-    tcsetattr(0, TCSANOW, &t);
+int main(void) {
+    char c;
+    static struct termios oldtio, newtio;
+    tcgetattr(0, &oldtio);
+    newtio = oldtio;
+    newtio.c_lflag &= ~ICANON;
+    newtio.c_lflag &= ~ECHO;
+    tcsetattr(0, TCSANOW, &newtio);
 
-// Once the buffering is turned off, the rest is simple.
-    cout << "Enter a character: ";
-    char c = cin.get();
-    cout << "Your character was " << c << endl;
+    printf("Give text:\n");
+    fflush(stdout);
+    while (1) {
+        c = getchar();
+
+        // is this an escape sequence?
+        if (c == 27) {
+            // "throw away" next two characters which specify escape sequence
+            c = getchar();
+            c = getchar();
+            continue;
+        }
+
+        // if backspace
+        if (c == 0x7f) {
+            // go one char left
+            printf("\b");
+            // overwrite the char with whitespace
+            printf(" ");
+            // go back to "now removed char position"
+            printf("\b");
+            continue;
+        }
+
+        if (c == 'q') {
+            break;
+        }
+        printf("%c", c);
+    }
+    printf("\n");
+    tcsetattr(0, TCSANOW, &oldtio);
 
     return 0;
 }
