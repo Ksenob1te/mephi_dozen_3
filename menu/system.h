@@ -3,7 +3,7 @@
 
 #if defined(__linux__) // Or #if __linux__
 #define SYSTEM 0
-#include "linux/input_char.h
+#include "linux/input_char.h"
 #include <fcntl.h>
 #elif _WIN32
 #define SYSTEM 1
