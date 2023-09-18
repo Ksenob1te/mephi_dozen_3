@@ -7,10 +7,13 @@ int main() {
 #if SYSTEM == 0
     struct termios t;
     tcgetattr(0, &t);
-    t.c_lflag &= ~(ICANON | ECHO);
+    t.c_lflag &= ~ICANON;
+    t.c_lflag &= ~ECHO;
     t.c_cc[VMIN] = 1;
     t.c_cc[VTIME] = 0;
     tcsetattr(0, TCSANOW, &t);
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
 #endif
 
     char c;
