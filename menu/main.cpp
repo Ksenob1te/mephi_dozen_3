@@ -4,18 +4,6 @@
 #include "system.h"
 
 int main() {
-#if SYSTEM == 0
-    struct termios t;
-    tcgetattr(0, &t);
-    t.c_lflag &= ~ICANON;
-    t.c_lflag &= ~ECHO;
-    t.c_cc[VMIN] = 1;
-    t.c_cc[VTIME] = 0;
-    tcsetattr(0, TCSANOW, &t);
-//    int oldf = fcntl(0, F_GETFL, 0);
-//    fcntl(0, F_SETFL, oldf | O_NONBLOCK);
-#endif
-
     char c;
     while (1) {
         Character::Code test = get_char(c);
