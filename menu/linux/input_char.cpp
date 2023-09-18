@@ -34,7 +34,10 @@ Character::Code get_char(char &c) {
         if (!kbhit()) return Character::ERROR;
 
         c = (char) getchar();
-        if (c != 91) return Character::ERROR;
+        if (c != 91) {
+            while (kbhit()) getchar();
+            return Character::ERROR;
+        }
 
         if (!kbhit()) return Character::ERROR;
         c = (char) getchar();
