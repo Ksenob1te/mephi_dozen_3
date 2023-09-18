@@ -5,6 +5,7 @@
 #include "../character.h"
 #include "iostream"
 #include "cstdlib"
+#include <fcntl.h>
 
 #define KEY_UP 65
 #define KEY_DOWN 66

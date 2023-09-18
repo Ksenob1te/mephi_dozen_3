@@ -6,17 +6,17 @@ int kbhit(void)
     int ch;
     int oldf;
 
-    tcgetattr(STDIN_FILENO, &oldt);
+    tcgetattr(0, &oldt);
     newt = oldt;
     newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
-    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
+    tcsetattr(0, TCSANOW, &newt);
+    oldf = fcntl(0, F_GETFL, 0);
+    fcntl(0, F_SETFL, oldf | O_NONBLOCK);
 
     ch = getchar();
 
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    fcntl(STDIN_FILENO, F_SETFL, oldf);
+    tcsetattr(0, TCSANOW, &oldt);
+    fcntl(0, F_SETFL, oldf);
 
     if(ch != EOF)
     {
