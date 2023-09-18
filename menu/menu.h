@@ -4,9 +4,6 @@
 #include "system.h"
 #include "cstring"
 #include "iostream"
-#if SYSTEM == 0
-#include <termios.h>
-#endif
 
 
 class Component {
@@ -67,12 +64,7 @@ private:
     void emit_type_event(char key);
     void draw();
 
-#if SYSTEM == 0
-termios oldtio, newtio;
-#endif
-
 public:
-    void init_termios();
     int selected;
     void menu_handler();
     Menu * add_component(void (*func) (), std::string label);
