@@ -12,8 +12,8 @@ int main() {
     t.c_cc[VMIN] = 1;
     t.c_cc[VTIME] = 0;
     tcsetattr(0, TCSANOW, &t);
-    int oldf = fcntl(0, F_GETFL, 0);
-    fcntl(0, F_SETFL, oldf | O_NONBLOCK);
+//    int oldf = fcntl(0, F_GETFL, 0);
+//    fcntl(0, F_SETFL, oldf | O_NONBLOCK);
 #endif
 
     char c;
