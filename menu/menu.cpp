@@ -71,12 +71,8 @@ Menu * Menu :: add_component(Component *component) {
 }
 
 void Menu :: draw() {
-    try {
-        system("cls");
-    } catch (...) {}
-    try {
-        system("clear");
-    } catch (...) {}
+    if (SYSTEM == 0) system("clear");
+    if (SYSTEM == 1) system("cls");
     for (int i = 0; i < this->current_size; i++) {
         Component *component = this->components[i];
         component->render(i == this->selected);
