@@ -10,5 +10,5 @@
 #define KEY_UP 65
 #define KEY_DOWN 66
 
-Character::Code get_char(char &c);
+Character::Character get_char();
 #endif //MEPHI_DOZEN_3_INPUT_CHAR_H

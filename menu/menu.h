@@ -10,15 +10,17 @@ class Component {
 protected:
     bool enabled;
     std::string label;
+    void (*on_action_callback) ();
 
-    explicit Component() : enabled(false) {};
-    explicit Component(std::string &str) : label(str), enabled(false) {};
+public:
+    explicit Component() : enabled(false), on_action_callback(nullptr) {};
+    explicit Component(std::string &str) : label(str), enabled(false), on_action_callback(nullptr) {};
     ~Component() = default;
 
-    virtual void event(char button) {};
+    virtual void event(Character::Character button) {};
     virtual void render(bool selected) {};
-public:
     void set_label(std::string &str);
+    void on_action(void on_action_callback(void));
     void set_enabled(bool status);
 };
 
@@ -33,41 +35,41 @@ public:
 };
 
 class Button : public Component {
-private:
-    void (*on_action_callback) ();
-
 public:
-    explicit Button() : Component(), on_action_callback(nullptr) {};
-    explicit Button(std::string &str) : Component(str), on_action_callback(nullptr) {};
+    explicit Button() : Component() {};
+    explicit Button(std::string &str) : Component(str) {};
     ~Button() = default;
     void render(bool selected) override;
-    void event(char button) override;
-    void on_action(void on_action_callback(void));
+    void event(Character::Character button) override;
 };
 
 
 class TextField : public Component {
 public:
     std::string data;
+    bool edit_mode;
 
-    explicit TextField() : Component() {};
-    explicit TextField(std::string &str) : Component(str) {};
+    explicit TextField() : Component(), edit_mode(false) {};
+    explicit TextField(std::string &str) : Component(str), edit_mode(false) {};
     ~TextField() = default;
     void render(bool selected) override;
-    void event(char button);
+    void event(Character::Character button) override;
 };
 
 
 class Menu {
 private:
-    Button *components;
-    void emit_type_event(char key);
+    Component ** components;
+    int current_size, max_size;
+    void emit_type_event(Character::Character key);
     void draw();
 
 public:
     int selected;
+    Menu() : current_size(0), max_size(10), components(new Component * [10]()), selected(0) {};
+    ~Menu();
     void menu_handler();
-    Menu * add_component(void (*func) (), std::string label);
+    Menu * add_component(Component *component);
 };
 
 #endif //MEPHI_DOZEN_3_MENU_H

@@ -10,6 +10,10 @@ namespace Character {
         SYMBOL,
         ERROR
     };
+    typedef struct Character {
+        Code code;
+        char data;
+    } Character;
 }
 
 #endif //MEPHI_DOZEN_3_CHARACTER_H

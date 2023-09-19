@@ -29,44 +29,44 @@ struct termios preset_atributes() {
     return oldt;
 }
 
-Character::Code get_char(char &c) {
+Character::Character get_char() {
     struct termios oldt = preset_atributes();
     fflush(stdout);
-    c = (char) getchar();
+    int c = getchar();
     if (c == 27) {
         if (!kbhit()) {
             tcsetattr(0, TCSANOW, &oldt);
-            return Character::ERROR;
+            return Character::Character {.code = Character::ERROR};
         }
 
         c = (char) getchar();
         if (c != 91) {
             while (kbhit()) getchar();
             tcsetattr(0, TCSANOW, &oldt);
-            return Character::ERROR;
+            return Character::Character {.code = Character::ERROR};
         }
 
         if (!kbhit()) {
             tcsetattr(0, TCSANOW, &oldt);
-            return Character::ERROR;
+            return Character::Character {.code = Character::ERROR};
         }
         c = (char) getchar();
         while (kbhit()) getchar();
         tcsetattr(0, TCSANOW, &oldt);
         switch (c) {
             case KEY_UP:
-                return Character::ARROW_UP;
+                return Character::Character {.code = Character::ARROW_UP};
             case KEY_DOWN:
-                return Character::ARROW_DOWN;
+                return Character::Character {.code = Character::ARROW_DOWN};
             default:
-                return Character::ERROR;
+                return Character::Character {.code = Character::ERROR};
         }
     }
     tcsetattr(0, TCSANOW, &oldt);
     if (c == '\n')
-        return Character::ENTER;
+        return Character::Character {.code = Character::ENTER};
     if (c == 0x7f)
-        return Character::BACKSPACE;
+        return Character::Character {.code = Character::BACKSPACE};
 
-    return Character::SYMBOL;
+    return Character::Character {.code = Character::SYMBOL, .data = (char) c};
 }
