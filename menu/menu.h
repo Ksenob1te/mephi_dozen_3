@@ -8,11 +8,11 @@
 
 class Component {
 protected:
-    bool enabled;
     std::string label;
     void (*on_action_callback) ();
 
 public:
+    bool enabled;
     explicit Component() : enabled(false), on_action_callback(nullptr) {};
     explicit Component(std::string &str) : label(str), enabled(false), on_action_callback(nullptr) {};
     ~Component() = default;
@@ -25,9 +25,8 @@ public:
 };
 
 class Label : public Component {
-private:
-    bool enabled = false;
 public:
+    bool enabled = false;
     explicit Label() : Component() {};
     explicit Label(std::string &str) : Component(str) {};
     ~Label() = default;

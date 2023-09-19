@@ -9,7 +9,7 @@ void Label :: render(bool selected) {
     if (selected)
         std::cout << Color::INVERSE << this->label << Color::DEFAULT << std::endl;
     else
-        std::cout << this->label << std::endl;
+        std::cout << Color::FG_YELLOW << this->label << Color::DEFAULT << std::endl;
 }
 
 void Button :: render(bool selected) {
@@ -27,11 +27,11 @@ void Button :: event(Character::Character button) {
 
 void TextField :: render(bool selected) {
     if (selected) {
-        std::cout << Color::INVERSE << this->label << ":";
+        std::cout << Color::INVERSE << this->label;
         if (this->edit_mode)
-            std::cout << " " << this->data << Color::DEFAULT << std::endl;
+            std::cout << ": " << this->data << Color::DEFAULT << std::endl;
         else
-            std::cout << Color::DEFAULT << " " << this->data << std::endl;
+            std::cout << Color::DEFAULT << ": " << this->data << std::endl;
     }
     else
         std::cout << this->label << ": " << this->data << std::endl;
@@ -81,13 +81,24 @@ void Menu :: draw() {
 
 void Menu :: emit_type_event(Character::Character key) {
     if (key.code == Character::ARROW_UP) {
-        if (this->selected - 1 < 0) return;
-        (this->selected)--;
+        int prev_selectable = this->selected;
+        for (int i = prev_selectable - 1; i >= 0; i--) {
+            if ((this->components)[i]->enabled) {prev_selectable = i; break;}
+        }
+        if (this->selected != prev_selectable)
+            this->selected = prev_selectable;
+        else
+            return;
     }
     else if (key.code == Character::ARROW_DOWN) {
-        if (this->selected + 1 >= this->current_size) return;
-        (this->selected)++;
-        this->draw();
+        int next_selectable = this->selected;
+        for (int i = next_selectable + 1; i < this->current_size; i++) {
+            if ((this->components)[i]->enabled) {next_selectable = i; break;}
+        }
+        if (this->selected != next_selectable)
+            this->selected = next_selectable;
+        else
+            return;
     }
     else
         this->components[this->selected]->event(key);
@@ -95,6 +106,8 @@ void Menu :: emit_type_event(Character::Character key) {
 }
 
 void Menu :: menu_handler() {
+    for (int i = 0; i < this->current_size; i++)
+        if ((this->components)[i]->enabled) {this->selected = i; break;}
     this->draw();
     while (1) {
         Character::Character c = get_char();
