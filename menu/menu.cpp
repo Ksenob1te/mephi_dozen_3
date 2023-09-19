@@ -71,8 +71,8 @@ Menu * Menu :: add_component(Component *component) {
 }
 
 void Menu :: draw() {
-    if (SYSTEM == 0) std::cout << "\033[2J";
-    if (SYSTEM == 1) system("cls");
+    if (SYSTEM == 0) std::system("clear");
+    if (SYSTEM == 1) std::system("cls");
     for (int i = 0; i < this->current_size; i++) {
         Component *component = this->components[i];
         component->render(i == this->selected);
