@@ -14,14 +14,14 @@ set(MENU_SET colors.h
 )
 
 if (WIN32)
-    add_library(menu
+    add_library(menu STATIC
             ${MENU_SET}
             windows/input_char.cpp
             windows/input_char.h)
 endif (WIN32)
 
 if (UNIX)
-    add_library(menu
+    add_library(menu STATIC
             ${MENU_SET}
             linux/input_char.cpp
             linux/input_char.h)
