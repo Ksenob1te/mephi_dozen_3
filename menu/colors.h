@@ -7,6 +7,7 @@ namespace Color {
         DEFAULT     = 0,
         INVERSE     = 7,
         FG_YELLOW   = 33,
+        FG_GRAY     = 90,
         FG_RED      = 31,
         FG_GREEN    = 32,
         FG_BLUE     = 34,

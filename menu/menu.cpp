@@ -1,56 +1,63 @@
 #include "colors.h"
 #include "menu.h"
 
-void Component :: set_label(std::string &str)   { this->label = str; }
-void Component :: set_enabled(bool status)      { this->enabled = status; }
-void Component :: on_action(void (*func)())     { this->on_action_callback = func; }
+void Component::set_label(std::string &str)           { this->label = str; }
+void Component::set_enabled(bool status)              { this->enabled = status; }
+void Component::on_action(Result::Code (*func)())     { this->on_action_callback = func; }
 
-void Label :: render(bool selected) {
+void Label::render(bool selected) {
     if (selected)
         std::cout << Color::INVERSE << this->label << Color::DEFAULT << std::endl;
     else
         std::cout << Color::FG_YELLOW << this->label << Color::DEFAULT << std::endl;
 }
 
-void Button :: render(bool selected) {
+void Button::render(bool selected) {
     if (selected)
         std::cout << Color::INVERSE << this->label << Color::DEFAULT << std::endl;
     else
         std::cout << this->label << std::endl;
 }
 
-void Button :: event(Character::Character button) {
+Result::Code Button::event(Character::Character button) {
+    Result::Code result = Result::SUCCESS;
     if (button.code == Character::ENTER) {
-        if (this->on_action_callback != nullptr) this->on_action_callback();
+        if (this->on_action_callback != nullptr) result = this->on_action_callback();
     }
+    return result;
 }
 
-void TextField :: render(bool selected) {
+void TextField::render(bool selected) {
     if (selected) {
         std::cout << Color::INVERSE << this->label;
         if (this->edit_mode)
             std::cout << ": " << this->data << Color::DEFAULT << std::endl;
         else
             std::cout << Color::DEFAULT << ": " << this->data << std::endl;
-    }
-    else
-        std::cout << this->label << ": " << this->data << std::endl;
+    } else
+        if (this->edit_mode) {
+            std::cout << this->label << ": " << Color::FG_GRAY << this->data << Color::DEFAULT << std::endl;
+        } else {
+            std::cout << this->label << ": " << this->data << Color::DEFAULT << std::endl;
+        }
 }
 
-void TextField :: event(Character::Character button) {
+Result::Code TextField::event(Character::Character button) {
+    Result::Code result = Result::SUCCESS;
     if (button.code == Character::ENTER) {
         if (!this->edit_mode)
             this->edit_mode = true;
         else {
-            if (this->on_action_callback != nullptr) this->on_action_callback();
+            if (this->on_action_callback != nullptr) result = this->on_action_callback();
             this->edit_mode = false;
         }
     }
-    if (button.code == Character::SYMBOL)
+    if (button.code == Character::SYMBOL && this->edit_mode)
         this->data.push_back(button.data);
-    if (button.code == Character::BACKSPACE)
+    if (button.code == Character::BACKSPACE && this->edit_mode)
         if (this->data.length() != 0)
             this->data.pop_back();
+    return result;
 }
 
 Component ** resize(Component **array, int old_size, int new_size) {
@@ -61,7 +68,7 @@ Component ** resize(Component **array, int old_size, int new_size) {
     return expanded_array;
 }
 
-Menu * Menu :: add_component(Component *component) {
+Menu * Menu::add_component(Component *component) {
     if (this->current_size + 1 >= this->max_size) {
         this->components = resize(this->components, this->max_size, this->max_size + 10);
         this->max_size += 10;
@@ -79,7 +86,8 @@ void Menu :: draw() {
     }
 }
 
-void Menu :: emit_type_event(Character::Character key) {
+Result::Code Menu::emit_type_event(Character::Character key) {
+    Result::Code result = Result::SUCCESS;
     if (key.code == Character::ARROW_UP) {
         int prev_selectable = this->selected;
         for (int i = prev_selectable - 1; i >= 0; i--) {
@@ -88,7 +96,7 @@ void Menu :: emit_type_event(Character::Character key) {
         if (this->selected != prev_selectable)
             this->selected = prev_selectable;
         else
-            return;
+            return result;
     }
     else if (key.code == Character::ARROW_DOWN) {
         int next_selectable = this->selected;
@@ -98,20 +106,37 @@ void Menu :: emit_type_event(Character::Character key) {
         if (this->selected != next_selectable)
             this->selected = next_selectable;
         else
-            return;
-    }
-    else
-        this->components[this->selected]->event(key);
+            return result;
+    } else
+        result = this->components[this->selected]->event(key);
     this->draw();
+    return result;
 }
 
-void Menu :: menu_handler() {
+Result::Code Menu::menu_handler() {
     for (int i = 0; i < this->current_size; i++)
         if ((this->components)[i]->enabled) {this->selected = i; break;}
     this->draw();
-    while (1) {
+    Result::Code launch_code = Result::SUCCESS;
+    while (launch_code == Result::SUCCESS) {
         Character::Character c = get_char();
-        this->emit_type_event(c);
+        launch_code = this->emit_type_event(c);
     }
+    return Result::SUCCESS;
 }
 
+Component* Menu::get_component(const std::string& label) const {
+    for (int i = 0; i < this->current_size; i++) {
+        if (this->components[i]->label == label) {
+            return this->components[i];
+        }
+    }
+    return nullptr;
+}
+
+Component* Menu::get_component(const int id) const {
+    if (this->current_size > id) return this->components[id];
+    return nullptr;
+}
+
+Menu::~Menu() {delete[] this->components;}
