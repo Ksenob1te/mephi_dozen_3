@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.26)
+
 set(MENU_SET colors.h
         menu.cpp
         menu.h
