@@ -96,6 +96,10 @@ Result::Code do_equal_operation() {
     return Result::SUCCESS;
 }
 
+Result::Code exit_sequence() {
+    return Result::EXIT;
+}
+
 
 void create_menu() {
     menu = new Menu();
@@ -138,6 +142,11 @@ void create_menu() {
     label = "Operation result: NONE";
     auto l2 = new Label(label);
 
+    label = "[Exit]";
+    auto b5 = new Button(label);
+    b5->on_action(exit_sequence);
+    b5->set_enabled(true);
+
     menu->add_component(l1);
     menu->add_component(tf1);
     menu->add_component(tf2);
@@ -148,6 +157,7 @@ void create_menu() {
     menu->add_component(b4);
     menu->add_component(l1);
     menu->add_component(l2);
+    menu->add_component(b5);
 }
 
 int main() {
