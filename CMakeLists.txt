@@ -4,8 +4,8 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory("menu")
 include_directories("menu")
+add_subdirectory("menu")
 add_executable(mephi_dozen_3 main.cpp)
 add_executable(lab_1 lab_1/data.cpp lab_1/data.h
         lab_1/main.cpp
