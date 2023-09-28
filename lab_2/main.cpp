@@ -163,6 +163,9 @@ void create_menu() {
 int main() {
     first = new Triple_Signal((short) 0);
     second = new Triple_Signal((short) 0);
+
+//    *first = *first || (short) 5;
+
     create_menu();
     menu->menu_handler();
 }

@@ -9,6 +9,7 @@ public:
     explicit Triple_Signal(char state);
     ~Triple_Signal() = default;
 
+
     short get_state() const;
     char get_state_char() const;
     void set_state(short element);
