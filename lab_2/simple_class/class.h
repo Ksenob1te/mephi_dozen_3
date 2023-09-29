@@ -1,5 +1,5 @@
-#ifndef MEPHI_DOZEN_3_CLASS_H
-#define MEPHI_DOZEN_3_CLASS_H
+#ifndef MEPHI_DOZEN_3_SIMPLE_CLASS_H
+#define MEPHI_DOZEN_3_SIMPLE_CLASS_H
 
 class Triple_Signal {
 private:
@@ -10,8 +10,8 @@ public:
     ~Triple_Signal() = default;
 
 
-    short get_state() const;
-    char get_state_char() const;
+    [[nodiscard]] short get_state() const;
+    [[nodiscard]] char get_state_char() const;
     void set_state(short element);
     void set_state(char state);
 
@@ -21,4 +21,4 @@ public:
     bool operator==(const Triple_Signal& a) const;
 };
 
-#endif //MEPHI_DOZEN_3_CLASS_H
+#endif //MEPHI_DOZEN_3_SIMPLE_CLASS_H
