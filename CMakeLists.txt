@@ -16,7 +16,13 @@ add_executable(lab_2 lab_2/main.cpp
         lab_2/simple_class/class.h
         lab_2/simple_class/class.cpp
         lab_2/hard_class/class.cpp
-        lab_2/hard_class/class.h)
+        lab_2/hard_class/class.h
+        lab_2/menu/methods.cpp
+        lab_2/menu/methods.h
+        lab_2/menu/hard_manager/manager.cpp
+        lab_2/menu/hard_manager/manager.h
+        lab_2/menu/hard_manager/operations.cpp
+        lab_2/menu/hard_manager/operations.h)
 target_link_libraries(lab_2 menu)
 
 

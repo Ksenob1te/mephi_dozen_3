@@ -10,7 +10,7 @@ Triple_Signal ** resize(Triple_Signal **array, int old_size, int new_size) {
 }
 
 Triple_Array::Triple_Array(int count) {
-    this->array = resize(this->array, 0, count);
+    this->array = new Triple_Signal *[count];
     this->element_count = count;
     this->element_limit = count;
     for (int i = 0; i < count; i++) {
@@ -20,7 +20,7 @@ Triple_Array::Triple_Array(int count) {
 
 Triple_Array::Triple_Array(const std::string& s) {
     if (s.length() > INT_MAX) throw std::length_error("string length exceeds int value");
-    this->array = resize(this->array, 0, (int) s.length());
+    this->array = new Triple_Signal *[s.length()];
     this->element_count = (int) s.length();
     this->element_limit = (int) s.length();
     for (int i = 0; i < s.length(); i++) {
@@ -73,7 +73,7 @@ bool Triple_Array::operator==(const Triple_Array &other) const {
     return true;
 }
 
-bool Triple_Array::definite(const Triple_Array &) const {
+bool Triple_Array::definite() const {
     for (int i = 0; i < this->element_count; i++)
         if (this->array[i]->get_state() == 2) return false;
     return true;
@@ -111,7 +111,7 @@ Triple_Signal& Triple_Array::pop_back() {
     return *(this->array[this->element_count--]);
 }
 
-Triple_Signal** Triple_Array::get_array() { return this->array; }
+Triple_Signal** Triple_Array::get_array() {if (this->get_size()) return this->array; else return nullptr;}
 int Triple_Array::get_size() const { return this->element_count; }
 int Triple_Array::get_limit() const { return this->element_limit; }
 

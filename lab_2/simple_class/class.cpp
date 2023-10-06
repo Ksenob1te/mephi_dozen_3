@@ -1,4 +1,8 @@
 #include "class.h"
+#include "iostream"
+#include "stdexcept"
+#include "limits"
+
 Triple_Signal::Triple_Signal(short state) {if (state >= 0 && state <= 2) this->state = state;}
 Triple_Signal::Triple_Signal(char state) {
     switch (state) {
@@ -83,4 +87,44 @@ void Triple_Signal::set_state(char element) {
         default:
             return;
     }
+}
+
+void Triple_Signal::cin() {
+    std::cout << "Type in signal: ";
+    char input;
+    std::cin >> input;
+    if (std::cin.eof())
+        throw std::runtime_error("Failed to read char: EOF");
+    else if (std::cin.bad())
+        throw std::runtime_error("Failed to read char");
+    else if (std::cin.fail())
+        throw std::runtime_error("Failed cin stream");
+    this->set_state(input);
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void Triple_Signal::cout() const {
+    std::cout << "State: ";
+    switch (this->state) {
+        case 0: std::cout << 0;
+        case 1: std::cout << 1;
+        case 2: std::cout << "X";
+    }
+    std::cout << std::endl;
+}
+
+Triple_Signal::operator std::string() const {
+    std::string x = "State: ";
+    switch (this->state) {
+        case 0:
+            x += "0\n";
+            break;
+        case 1:
+            x += "1\n";
+            break;
+        case 2:
+            x += "X\n";
+            break;
+    }
+    return x;
 }

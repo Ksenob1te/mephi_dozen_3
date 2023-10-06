@@ -24,15 +24,15 @@ public:
     Triple_Signal& pop_back();
 
     Triple_Signal** get_array();
-    int get_size() const;
-    int get_limit() const;
+    [[nodiscard]] int get_size() const;
+    [[nodiscard]] int get_limit() const;
 
 
     Triple_Array& operator|(const Triple_Array&) const;
     Triple_Array& operator&(const Triple_Array&) const;
     Triple_Array& operator~() const;
     bool operator==(const Triple_Array&) const;
-    [[nodiscard]] bool definite(const Triple_Array&) const;
+    [[nodiscard]] bool definite() const;
 };
 
 #endif //MEPHI_DOZEN_3_HARD_CLASS_H
