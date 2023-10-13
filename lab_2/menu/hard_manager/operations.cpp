@@ -7,6 +7,7 @@ Result::Code do_or_operation() {
 
     Menu *result = new Menu();
     std::string label = get_array_status(operation_result);
+    delete operation_result;
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -28,6 +29,7 @@ Result::Code do_and_operation() {
 
     Menu *result = new Menu();
     std::string label = get_array_status(operation_result);
+    delete operation_result;
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -48,6 +50,7 @@ Result::Code do_negative_operation() {
 
     Menu *result = new Menu();
     std::string label = get_array_status(operation_result);
+    delete operation_result;
     auto *l1 = new Label(label);
 
     label = "[Exit]";
