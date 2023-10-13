@@ -35,37 +35,36 @@ Triple_Array::~Triple_Array() {
     delete[] this->array;
 }
 
-Triple_Array* Triple_Array::operator|(const Triple_Array &other) const {
+Triple_Array Triple_Array::operator|(const Triple_Array &other) const {
     int new_size = std::max(this->element_count, other.element_count);
-    auto result = new Triple_Array(new_size);
+    Triple_Array result(new_size);
     for (int i = 0; i < new_size; i++) {
         if (i < this->element_count && i < other.element_count) {
-            result->array[i] = *(this->array[i]) || *(other.array[i]);
+            result.array[i] = *(this->array[i]) || *(other.array[i]);
         } else if   ((i < this->element_count && this->array[i]->get_state() == 1) ||
                     (i < other.element_count && other.array[i]->get_state() == 1))
-            result->array[i]->set_state((short) 1);
+            result.array[i]->set_state((short) 1);
     }
     return result;
 }
 
-Triple_Array* Triple_Array::operator&(const Triple_Array &other) const {
+Triple_Array Triple_Array::operator&(const Triple_Array &other) const {
     int new_size = std::max(this->element_count, other.element_count);
-    auto result = new Triple_Array(new_size);
-    for (int i = 0; i < new_size; i++) {
+    Triple_Array result(new_size);    for (int i = 0; i < new_size; i++) {
         if (i < this->element_count && i < other.element_count) {
-            result->array[i] = *(this->array[i]) && *(other.array[i]);
+            result.array[i] = *(this->array[i]) && *(other.array[i]);
         } else if   ((i < this->element_count && this->array[i]->get_state() == 0) ||
                      (i < other.element_count && other.array[i]->get_state() == 0))
-            result->array[i]->set_state((short) 0);
+            result.array[i]->set_state((short) 0);
     }
     return result;
 }
 
-Triple_Array* Triple_Array::operator~() const {
+Triple_Array Triple_Array::operator~() const {
     int new_size = this->element_count;
-    auto result = new Triple_Array(new_size);
+    Triple_Array result(new_size);
     for (int i = 0; i < new_size; i++)
-        result->array[i] = !*(this->array[i]);
+        result.array[i] = !*(this->array[i]);
     return result;
 }
 
@@ -76,10 +75,16 @@ bool Triple_Array::operator==(const Triple_Array &other) const {
     return true;
 }
 
-Triple_Signal *Triple_Array::operator[](int index) const {
+Triple_Signal& Triple_Array::operator[](int index) {
     if (index < 0 || index >= this->element_count)
         throw std::out_of_range("id is out of elements range");
-    return this->array[index];
+    return *(this->array[index]);
+}
+
+const Triple_Signal& Triple_Array::operator[](int index) const {
+    if (index < 0 || index >= this->element_count)
+        throw std::out_of_range("id is out of elements range");
+    return *(this->array[index]);
 }
 
 bool Triple_Array::definite() const {

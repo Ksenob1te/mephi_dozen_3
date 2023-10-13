@@ -23,7 +23,8 @@ public:
     Triple_Signal* operator||(const Triple_Signal&) const;
     Triple_Signal* operator&&(const Triple_Signal&) const;
     Triple_Signal* operator!() const;
-    void operator++();
+    Triple_Signal& operator++();
+    Triple_Signal operator++(int);
     void operator--();
     bool operator==(const Triple_Signal& a) const;
 };

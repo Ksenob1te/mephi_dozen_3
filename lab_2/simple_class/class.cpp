@@ -59,9 +59,17 @@ bool Triple_Signal::operator==(const Triple_Signal &other) const {
     return false;
 }
 
-void Triple_Signal::operator++() {
-    if (this->state == 2) return;
+Triple_Signal& Triple_Signal::operator++() {
+    if (this->state == 2) return *(this);
     this->state = (short)((this->state + 1) % 2);
+    return *this;
+}
+
+Triple_Signal Triple_Signal::operator++(int n) {
+    Triple_Signal result = *(this);
+    if (this->state == 2) return result;
+    this->state = (short)((this->state + 1) % 2);
+    return result;
 }
 
 void Triple_Signal::operator--() {

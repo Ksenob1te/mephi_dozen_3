@@ -3,11 +3,10 @@
 Result::Code do_or_operation() {
     if (first_array == nullptr) return Result::ERROR;
     if (second_array == nullptr) return Result::ERROR;
-    Triple_Array* operation_result = *first_array | *second_array;
+    Triple_Array operation_result = *first_array | *second_array;
 
     Menu *result = new Menu();
-    std::string label = get_array_status(operation_result);
-    delete operation_result;
+    std::string label = get_array_status(&operation_result);
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -25,11 +24,10 @@ Result::Code do_or_operation() {
 Result::Code do_and_operation() {
     if (first_array == nullptr) return Result::ERROR;
     if (second_array == nullptr) return Result::ERROR;
-    Triple_Array* operation_result = *first_array & *second_array;
+    Triple_Array operation_result = *first_array & *second_array;
 
     Menu *result = new Menu();
-    std::string label = get_array_status(operation_result);
-    delete operation_result;
+    std::string label = get_array_status(&operation_result);
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -46,11 +44,10 @@ Result::Code do_and_operation() {
 
 Result::Code do_negative_operation() {
     if (first_array == nullptr) return Result::ERROR;
-    Triple_Array* operation_result = ~(*first_array);
+    Triple_Array operation_result = ~(*first_array);
 
     Menu *result = new Menu();
-    std::string label = get_array_status(operation_result);
-    delete operation_result;
+    std::string label = get_array_status(&operation_result);
     auto *l1 = new Label(label);
 
     label = "[Exit]";
