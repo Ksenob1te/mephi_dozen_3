@@ -7,6 +7,7 @@
 extern Menu* simple_menu;
 
 void create_hard_menu();
+void manage_hard_menu();
 extern Menu* hard_menu;
 
 #endif //MEPHI_DOZEN_3_METHODS_H

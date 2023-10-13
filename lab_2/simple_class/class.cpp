@@ -16,11 +16,12 @@ Triple_Signal::Triple_Signal(char state) {
             this->state = 2;
             return;
         default:
+            this->state = 2;
             return;
     }
 }
 
-Triple_Signal& Triple_Signal::operator||(const Triple_Signal &other) const {
+Triple_Signal* Triple_Signal::operator||(const Triple_Signal &other) const {
     short num_result;
     if (this->state == 1 || other.state == 1)
         num_result = 1;
@@ -29,10 +30,10 @@ Triple_Signal& Triple_Signal::operator||(const Triple_Signal &other) const {
     else
         num_result = 2;
 
-    return *(new Triple_Signal(num_result));
+    return new Triple_Signal(num_result);
 }
 
-Triple_Signal& Triple_Signal::operator&&(const Triple_Signal &other) const {
+Triple_Signal* Triple_Signal::operator&&(const Triple_Signal &other) const {
     short num_result;
     if (this->state == 0 || other.state == 0)
         num_result = 0;
@@ -41,21 +42,31 @@ Triple_Signal& Triple_Signal::operator&&(const Triple_Signal &other) const {
     else
         num_result = 1;
 
-    return *(new Triple_Signal(num_result));
+    return new Triple_Signal(num_result);
 }
 
-Triple_Signal& Triple_Signal::operator!() const {
+Triple_Signal* Triple_Signal::operator!() const {
     short num_result;
     if (this->state == 2)
         num_result = 2;
     else
         num_result = (short) !this->state;
-    return *(new Triple_Signal(num_result));
+    return new Triple_Signal(num_result);
 }
 
 bool Triple_Signal::operator==(const Triple_Signal &other) const {
     if (this->state == other.state) return true;
     return false;
+}
+
+void Triple_Signal::operator++() {
+    if (this->state == 2) return;
+    this->state = (short)((this->state + 1) % 2);
+}
+
+void Triple_Signal::operator--() {
+    if (this->state == 2) return;
+    this->state = (short)((this->state + 1) % 2);
 }
 
 short Triple_Signal::get_state() const {return this->state;}

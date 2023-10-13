@@ -10,5 +10,6 @@ std::string get_array_status(Triple_Array *array);
 Result::Code exit_sequence();
 Result::Code first_menu();
 Result::Code second_menu();
+void manage_hard_menu();
 
 #endif //MEPHI_DOZEN_3_MANAGER_H

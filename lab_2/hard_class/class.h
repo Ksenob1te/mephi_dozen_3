@@ -21,16 +21,17 @@ public:
     void push_back(char element);
     void push_back(short element);
 
-    Triple_Signal& pop_back();
+    Triple_Signal* pop_back();
 
     Triple_Signal** get_array();
     [[nodiscard]] int get_size() const;
     [[nodiscard]] int get_limit() const;
 
 
-    Triple_Array& operator|(const Triple_Array&) const;
-    Triple_Array& operator&(const Triple_Array&) const;
-    Triple_Array& operator~() const;
+    Triple_Array* operator|(const Triple_Array&) const;
+    Triple_Array* operator&(const Triple_Array&) const;
+    Triple_Array* operator~() const;
+    Triple_Signal* operator[](int index) const;
     bool operator==(const Triple_Array&) const;
     [[nodiscard]] bool definite() const;
 };

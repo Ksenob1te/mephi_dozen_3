@@ -20,9 +20,11 @@ public:
     void set_state(short element);
     void set_state(char state);
 
-    Triple_Signal& operator||(const Triple_Signal&) const;
-    Triple_Signal& operator&&(const Triple_Signal&) const;
-    Triple_Signal& operator!() const;
+    Triple_Signal* operator||(const Triple_Signal&) const;
+    Triple_Signal* operator&&(const Triple_Signal&) const;
+    Triple_Signal* operator!() const;
+    void operator++();
+    void operator--();
     bool operator==(const Triple_Signal& a) const;
 };
 

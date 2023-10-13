@@ -1,12 +1,12 @@
 #include "operations.h"
 
 Result::Code do_or_operation() {
-    if (first_array == nullptr) return Result::SUCCESS;
-    if (second_array == nullptr) return Result::SUCCESS;
-    Triple_Array operation_result = *first_array | *second_array;
+    if (first_array == nullptr) return Result::ERROR;
+    if (second_array == nullptr) return Result::ERROR;
+    Triple_Array* operation_result = *first_array | *second_array;
 
     Menu *result = new Menu();
-    std::string label = get_array_status(&operation_result);
+    std::string label = get_array_status(operation_result);
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -22,12 +22,12 @@ Result::Code do_or_operation() {
 }
 
 Result::Code do_and_operation() {
-    if (first_array == nullptr) return Result::SUCCESS;
-    if (second_array == nullptr) return Result::SUCCESS;
-    Triple_Array operation_result = *first_array & *second_array;
+    if (first_array == nullptr) return Result::ERROR;
+    if (second_array == nullptr) return Result::ERROR;
+    Triple_Array* operation_result = *first_array & *second_array;
 
     Menu *result = new Menu();
-    std::string label = get_array_status(&operation_result);
+    std::string label = get_array_status(operation_result);
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -43,11 +43,11 @@ Result::Code do_and_operation() {
 }
 
 Result::Code do_negative_operation() {
-    if (first_array == nullptr) return Result::SUCCESS;
-    Triple_Array operation_result = ~(*first_array);
+    if (first_array == nullptr) return Result::ERROR;
+    Triple_Array* operation_result = ~(*first_array);
 
     Menu *result = new Menu();
-    std::string label = get_array_status(&operation_result);
+    std::string label = get_array_status(operation_result);
     auto *l1 = new Label(label);
 
     label = "[Exit]";
@@ -63,8 +63,8 @@ Result::Code do_negative_operation() {
 }
 
 Result::Code do_equal_operation() {
-    if (first_array == nullptr) return Result::SUCCESS;
-    if (second_array == nullptr) return Result::SUCCESS;
+    if (first_array == nullptr) return Result::ERROR;
+    if (second_array == nullptr) return Result::ERROR;
     bool operation_result = *first_array == *second_array;
 
     Menu *result = new Menu();
@@ -84,7 +84,7 @@ Result::Code do_equal_operation() {
 }
 
 Result::Code do_define_operation() {
-    if (first_array == nullptr) return Result::SUCCESS;
+    if (first_array == nullptr) return Result::ERROR;
     bool operation_result = first_array->definite();
 
     Menu *result = new Menu();

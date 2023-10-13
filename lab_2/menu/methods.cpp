@@ -66,3 +66,13 @@ void create_hard_menu() {
     hard_menu->add_component(b6);
 }
 
+void manage_hard_menu() {
+    hard_menu->menu_handler();
+    delete hard_menu;
+    hard_menu = nullptr;
+    delete first_array;
+    first_array = nullptr;
+    delete second_array;
+    second_array = nullptr;
+}
+

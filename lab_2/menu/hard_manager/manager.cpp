@@ -4,6 +4,9 @@
 Menu *init_first;
 Menu *init_second;
 
+Menu *pb_first;
+Menu *pb_second;
+
 Result::Code exit_sequence() {
     return Result::EXIT;
 }
@@ -91,6 +94,52 @@ Result::Code first_string_menu() {
     return Result::SUCCESS;
 }
 
+Result::Code char_input_first() {
+    Component* result = pb_first->get_component(1);
+    if (result->get_data().length() == 1) {
+        char select = (result->get_data())[0];
+        if (first_array == nullptr)
+            first_array = new Triple_Array(0);
+        first_array->push_back(select);
+        return Result::EXIT;
+    } else
+        ((TextField *) result)->data = "";
+    return Result::SUCCESS;
+}
+
+Result::Code first_push_back() {
+    pb_first = new Menu();
+
+    std::string label = "-----------------";
+    auto l1 = new Label(label);
+
+    label = "Type in element [char]";
+    auto tf1 = new TextField(label);
+    tf1->set_enabled(true);
+    tf1->on_action(char_input_first);
+
+    label = "[Cancel]";
+    auto b1 = new Button(label);
+    b1->set_enabled(true);
+    b1->on_action(exit_sequence);
+
+    pb_first->add_component(l1);
+    pb_first->add_component(tf1);
+    pb_first->add_component(b1);
+
+    pb_first->menu_handler();
+    delete pb_first;
+    pb_first = nullptr;
+    return Result::SUCCESS;
+}
+
+Result::Code first_pop_back() {
+    if (first_array == nullptr)
+        return Result::ERROR;
+    delete first_array->pop_back();
+    return Result::SUCCESS;
+}
+
 Result::Code first_menu() {
     auto first_hard_menu = new Menu();
 
@@ -107,6 +156,16 @@ Result::Code first_menu() {
     b2->set_enabled(true);
     b2->on_action(first_string_menu);
 
+    label = "[Push back]";
+    auto b4 = new Button(label);
+    b4->set_enabled(true);
+    b4->on_action(first_push_back);
+
+    label = "[Pop back]";
+    auto b5 = new Button(label);
+    b5->set_enabled(true);
+    b5->on_action(first_pop_back);
+
     label = "[Exit | Refresh]";
     auto b3 = new Button(label);
     b3->set_enabled(true);
@@ -115,6 +174,8 @@ Result::Code first_menu() {
     first_hard_menu->add_component(l1);
     first_hard_menu->add_component(b1);
     first_hard_menu->add_component(b2);
+    first_hard_menu->add_component(b4);
+    first_hard_menu->add_component(b5);
 
     if (first_array) {
         label = get_array_status(first_array);
@@ -204,6 +265,52 @@ Result::Code second_string_menu() {
     return Result::SUCCESS;
 }
 
+Result::Code char_input_second() {
+    Component* result = pb_second->get_component(1);
+    if (result->get_data().length() == 1) {
+        char select = (result->get_data())[0];
+        if (second_array == nullptr)
+            second_array = new Triple_Array(0);
+        second_array->push_back(select);
+        return Result::EXIT;
+    } else
+        ((TextField *) result)->data = "";
+    return Result::SUCCESS;
+}
+
+Result::Code second_push_back() {
+    pb_second = new Menu();
+
+    std::string label = "-----------------";
+    auto l1 = new Label(label);
+
+    label = "Type in element [char]";
+    auto tf1 = new TextField(label);
+    tf1->set_enabled(true);
+    tf1->on_action(char_input_second);
+
+    label = "[Cancel]";
+    auto b1 = new Button(label);
+    b1->set_enabled(true);
+    b1->on_action(exit_sequence);
+
+    pb_second->add_component(l1);
+    pb_second->add_component(tf1);
+    pb_second->add_component(b1);
+
+    pb_second->menu_handler();
+    delete pb_second;
+    pb_second = nullptr;
+    return Result::SUCCESS;
+}
+
+Result::Code second_pop_back() {
+    if (second_array == nullptr)
+        return Result::ERROR;
+    delete second_array->pop_back();
+    return Result::SUCCESS;
+}
+
 Result::Code second_menu() {
     auto second_hard_menu = new Menu();
 
@@ -220,6 +327,16 @@ Result::Code second_menu() {
     b2->set_enabled(true);
     b2->on_action(second_string_menu);
 
+    label = "[Push back]";
+    auto b4 = new Button(label);
+    b4->set_enabled(true);
+    b4->on_action(second_push_back);
+
+    label = "[Pop back]";
+    auto b5 = new Button(label);
+    b5->set_enabled(true);
+    b5->on_action(second_pop_back);
+
     label = "[Exit | Refresh]";
     auto b3 = new Button(label);
     b3->set_enabled(true);
@@ -228,6 +345,8 @@ Result::Code second_menu() {
     second_hard_menu->add_component(l1);
     second_hard_menu->add_component(b1);
     second_hard_menu->add_component(b2);
+    second_hard_menu->add_component(b4);
+    second_hard_menu->add_component(b5);
 
     if (second_array) {
         label = get_array_status(second_array);
