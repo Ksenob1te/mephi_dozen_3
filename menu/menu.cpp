@@ -140,8 +140,15 @@ Component* Menu::get_component(const int id) const {
 }
 
 Menu::~Menu() {
-    for (int i = 0; i < this->max_size; i++) {
+    for (int i = 0; i < this->current_size; i++) {
+        for (int j = i + 1; j < this->current_size; j++) {
+            if (this->components[i] == this->components[j])
+                this->components[j] = nullptr;
+        }
         delete (this->components)[i];
     }
-    delete[] this->components; this->current_size = 0; this->max_size = 0;
+
+    delete[] this->components;
+    this->current_size = 0;
+    this->max_size = 0;
 }
