@@ -355,8 +355,8 @@ Result::Code second_menu() {
     }
 
     second_hard_menu->add_component(b3);
-
     second_hard_menu->menu_handler();
+    delete second_hard_menu;
     return Result::SUCCESS;
 }
 
