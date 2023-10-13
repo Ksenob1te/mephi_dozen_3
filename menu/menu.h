@@ -75,8 +75,8 @@ private:
 
 public:
     int selected;
-    Component* get_component(const std::string& label) const;
-    Component* get_component(const int id) const;
+    [[nodiscard]] Component* get_component(const std::string& label) const;
+    [[nodiscard]] Component* get_component(int id) const;
     Menu() : current_size(0), max_size(10), components(new Component * [10]()), selected(0) {};
     ~Menu();
     Result::Code menu_handler();

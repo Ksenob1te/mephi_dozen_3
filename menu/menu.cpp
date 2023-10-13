@@ -122,7 +122,6 @@ Result::Code Menu::menu_handler() {
         Character::Character c = get_char();
         launch_code = this->emit_type_event(c);
     }
-    delete this;
     return Result::SUCCESS;
 }
 
@@ -140,4 +139,9 @@ Component* Menu::get_component(const int id) const {
     return nullptr;
 }
 
-Menu::~Menu() {delete[] this->components;}
+Menu::~Menu() {
+    for (int i = 0; i < this->max_size; i++) {
+        delete (this->components)[i];
+    }
+    delete[] this->components; this->current_size = 0; this->max_size = 0;
+}
