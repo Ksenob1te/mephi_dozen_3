@@ -1,5 +1,6 @@
 #include "class.h"
 #include "stdexcept"
+#include "limits"
 
 Triple_Signal ** resize(Triple_Signal **array, int old_size, int new_size) {
     auto expanded_array = new Triple_Signal *[new_size];
