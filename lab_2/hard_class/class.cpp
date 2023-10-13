@@ -30,6 +30,8 @@ Triple_Array::Triple_Array(const std::string& s) {
 }
 
 Triple_Array::~Triple_Array() {
+    for (int i = 0; i < this->element_count; i++)
+        delete this->array[i];
     delete[] this->array;
 }
 

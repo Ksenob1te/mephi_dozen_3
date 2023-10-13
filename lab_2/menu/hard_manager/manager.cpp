@@ -184,8 +184,9 @@ Result::Code first_menu() {
     }
 
     first_hard_menu->add_component(b3);
-
     first_hard_menu->menu_handler();
+    delete first_hard_menu;
+    first_hard_menu = nullptr;
     return Result::SUCCESS;
 }
 
