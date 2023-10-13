@@ -122,6 +122,7 @@ Result::Code Menu::menu_handler() {
         Character::Character c = get_char();
         launch_code = this->emit_type_event(c);
     }
+    delete this;
     return Result::SUCCESS;
 }
 
