@@ -96,10 +96,13 @@ Triple_Array Triple_Array::operator|(const Triple_Array &other) const {
     Triple_Array result(new_size);
     for (int i = 0; i < new_size; i++) {
         if (i < this->element_count && i < other.element_count) {
+            delete result.array[i];
             result.array[i] = *(this->array[i]) || *(other.array[i]);
         } else if   ((i < this->element_count && this->array[i]->get_state() == 1) ||
-                    (i < other.element_count && other.array[i]->get_state() == 1))
+                    (i < other.element_count && other.array[i]->get_state() == 1)) {
+            delete result.array[i];
             result.array[i]->set_state((short) 1);
+        }
     }
     return result;
 }
@@ -109,10 +112,13 @@ Triple_Array Triple_Array::operator&(const Triple_Array &other) const {
     Triple_Array result(new_size);
     for (int i = 0; i < new_size; i++) {
         if (i < this->element_count && i < other.element_count) {
+            delete result.array[i];
             result.array[i] = *(this->array[i]) && *(other.array[i]);
         } else if   ((i < this->element_count && this->array[i]->get_state() == 0) ||
-                     (i < other.element_count && other.array[i]->get_state() == 0))
+                     (i < other.element_count && other.array[i]->get_state() == 0)) {
+            delete result.array[i];
             result.array[i]->set_state((short) 0);
+        }
     }
     return result;
 }
@@ -120,8 +126,10 @@ Triple_Array Triple_Array::operator&(const Triple_Array &other) const {
 Triple_Array Triple_Array::operator~() const {
     int new_size = this->element_count;
     Triple_Array result(new_size);
-    for (int i = 0; i < new_size; i++)
+    for (int i = 0; i < new_size; i++) {
+        delete result.array[i];
         result.array[i] = !*(this->array[i]);
+    }
     return result;
 }
 
