@@ -25,6 +25,7 @@ public:
     Triple_Signal* operator!() const;
     Triple_Signal& operator++();
     Triple_Signal operator++(int);
+    [[nodiscard]] Triple_Signal* copy() const;
     void operator--();
     bool operator==(const Triple_Signal& a) const;
 };

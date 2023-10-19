@@ -10,8 +10,14 @@ Triple_Signal ** resize(Triple_Signal **array, int old_size, int new_size) {
     return expanded_array;
 }
 
+Triple_Array::Triple_Array() {
+    this->array = new Triple_Signal * [0];
+    this->element_count = 0;
+    this->element_limit = 0;
+}
+
 Triple_Array::Triple_Array(int count) {
-    this->array = new Triple_Signal *[count];
+    this->array = new Triple_Signal * [count];
     this->element_count = count;
     this->element_limit = count;
     for (int i = 0; i < count; i++) {
@@ -29,10 +35,60 @@ Triple_Array::Triple_Array(const std::string& s) {
     }
 }
 
+Triple_Array::Triple_Array(const Triple_Array& other) {
+    if (this == &other) return;
+    for (int i = 0; i < this->element_count; i++)
+        delete this->array[i];
+    delete[] this->array;
+
+    this->element_count = other.element_count;
+    this->element_limit = other.element_limit;
+    this->array = new Triple_Signal* [this->element_limit];
+    for (int i = 0; i < this->element_count; i++)
+        this->array[i] = other.array[i]->copy();
+}
+
+Triple_Array::Triple_Array(Triple_Array&& other) noexcept {
+    for (int i = 0; i < this->element_count; i++)
+        delete this->array[i];
+    delete[] this->array;
+    this->element_count = other.element_count;
+    this->element_limit = other.element_limit;
+    this->array = new Triple_Signal* [this->element_limit];
+    for (int i = 0; i < this->element_count; i++)
+        this->array[i] = other.array[i];
+}
+
 Triple_Array::~Triple_Array() {
     for (int i = 0; i < this->element_count; i++)
         delete this->array[i];
     delete[] this->array;
+}
+
+Triple_Array& Triple_Array::operator=(const Triple_Array &other) {
+    if (this == &other) return *this;
+    for (int i = 0; i < this->element_count; i++)
+        delete this->array[i];
+    delete[] this->array;
+
+    this->element_count = other.element_count;
+    this->element_limit = other.element_limit;
+    this->array = new Triple_Signal* [this->element_limit];
+    for (int i = 0; i < this->element_count; i++)
+        this->array[i] = other.array[i]->copy();
+    return *this;
+}
+
+Triple_Array& Triple_Array::operator=(Triple_Array &&other) noexcept {
+    for (int i = 0; i < this->element_count; i++)
+        delete this->array[i];
+    delete[] this->array;
+    this->element_count = other.element_count;
+    this->element_limit = other.element_limit;
+    this->array = new Triple_Signal* [this->element_limit];
+    for (int i = 0; i < this->element_count; i++)
+        this->array[i] = other.array[i];
+    return *this;
 }
 
 Triple_Array Triple_Array::operator|(const Triple_Array &other) const {
@@ -50,7 +106,8 @@ Triple_Array Triple_Array::operator|(const Triple_Array &other) const {
 
 Triple_Array Triple_Array::operator&(const Triple_Array &other) const {
     int new_size = std::max(this->element_count, other.element_count);
-    Triple_Array result(new_size);    for (int i = 0; i < new_size; i++) {
+    Triple_Array result(new_size);
+    for (int i = 0; i < new_size; i++) {
         if (i < this->element_count && i < other.element_count) {
             result.array[i] = *(this->array[i]) && *(other.array[i]);
         } else if   ((i < this->element_count && this->array[i]->get_state() == 0) ||

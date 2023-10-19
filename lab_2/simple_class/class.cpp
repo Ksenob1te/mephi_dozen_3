@@ -147,3 +147,8 @@ Triple_Signal::operator std::string() const {
     }
     return x;
 }
+
+Triple_Signal* Triple_Signal::copy() const {
+    auto result = new Triple_Signal(this->state);
+    return result;
+}

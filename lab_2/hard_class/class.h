@@ -11,9 +11,15 @@ private:
     int element_limit;
 
 public:
+    explicit Triple_Array();
     explicit Triple_Array(int count);
     explicit Triple_Array(const std::string& s);
+    Triple_Array(const Triple_Array& other);
+    Triple_Array(Triple_Array&& other) noexcept;
     ~Triple_Array();
+
+    Triple_Array& operator=(const Triple_Array& other);
+    Triple_Array& operator=(Triple_Array&& other) noexcept;
 
     void set_element_by_id(char element, int id);
     void set_element_by_id(short element, int id);
@@ -34,6 +40,7 @@ public:
 
     bool operator==(const Triple_Array&) const;
     [[nodiscard]] bool definite() const;
+
 };
 
 #endif //MEPHI_DOZEN_3_HARD_CLASS_H
