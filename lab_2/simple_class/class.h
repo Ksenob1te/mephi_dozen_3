@@ -11,8 +11,8 @@ public:
     explicit operator std::string() const;
 
     ~Triple_Signal() = default;
-    void cin();
-    void cout() const;
+    void cin(std::istream&);
+    void cout(std::ostream&) const;
 
 
     [[nodiscard]] short get_state() const; // notify that user should not ignore return value
@@ -26,7 +26,6 @@ public:
     Triple_Signal& operator++();
     Triple_Signal operator++(int);
     [[nodiscard]] Triple_Signal* copy() const;
-    void operator--();
     bool operator==(const Triple_Signal& a) const;
 };
 

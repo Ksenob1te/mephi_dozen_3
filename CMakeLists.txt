@@ -6,7 +6,20 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories("menu")
 add_subdirectory("menu")
+include_directories("testing")
 add_executable(mephi_dozen_3 main.cpp)
+
+add_executable(Test testing/catch.hpp
+
+        lab_2/simple_class/class.h
+        lab_2/simple_class/class.cpp
+        lab_2/testing/simple_class/testing.cpp
+)
+
+set_target_properties(Test PROPERTIES LINKER_LANGUAGE CXX)
+add_compile_options(--coverage)
+add_link_options(--coverage)
+
 add_executable(lab_1 lab_1/data.cpp lab_1/data.h
         lab_1/main.cpp
         lab_1/matrix.cpp
@@ -23,6 +36,9 @@ add_executable(lab_2 lab_2/main.cpp
         lab_2/menu/hard_manager/manager.h
         lab_2/menu/hard_manager/operations.cpp
         lab_2/menu/hard_manager/operations.h)
+
+
+
 target_link_libraries(lab_2 menu)
 
 
