@@ -1,4 +1,4 @@
 /.idea
 /cmake-build-debug
-testing/catch.hpp
+/testing/catch.hpp
 /cmake-build-debug-coverage/
