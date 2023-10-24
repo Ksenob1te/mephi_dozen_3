@@ -39,6 +39,6 @@ add_executable(lab_1 lab_1/data.cpp lab_1/data.h
 
 
 
-target_link_libraries(lab_2 menu)
+#target_link_libraries(lab_2 menu)
 
 
