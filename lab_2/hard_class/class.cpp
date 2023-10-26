@@ -37,10 +37,6 @@ Triple_Array::Triple_Array(const std::string& s) {
 
 Triple_Array::Triple_Array(const Triple_Array& other) {
     if (this == &other) return;
-    for (int i = 0; i < this->element_count; i++)
-        delete this->array[i];
-    delete[] this->array;
-
     this->element_count = other.element_count;
     this->element_limit = other.element_limit;
     this->array = new Triple_Signal* [this->element_limit];
@@ -49,9 +45,6 @@ Triple_Array::Triple_Array(const Triple_Array& other) {
 }
 
 Triple_Array::Triple_Array(Triple_Array&& other) noexcept {
-    for (int i = 0; i < this->element_count; i++)
-        delete this->array[i];
-    delete[] this->array;
     this->element_count = other.element_count;
     this->element_limit = other.element_limit;
     this->array = new Triple_Signal* [this->element_limit];

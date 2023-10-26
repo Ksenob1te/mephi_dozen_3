@@ -13,7 +13,9 @@ add_executable(Test testing/catch.hpp
 
         lab_2/simple_class/class.h
         lab_2/simple_class/class.cpp
-        lab_2/testing/simple_class/testing.cpp
+        lab_2/hard_class/class.h
+        lab_2/hard_class/class.cpp
+        lab_2/testing/testing.cpp
 )
 
 set_target_properties(Test PROPERTIES LINKER_LANGUAGE CXX)

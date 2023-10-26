@@ -1,8 +1,8 @@
 #define CATCH_CONFIG_MAIN
-#include <catch.hpp>
+#include "../../testing/catch.hpp"
 #include "string"
-#include "../../simple_class/class.h"
-#include "../../hard_class//class.h"
+#include "../simple_class/class.h"
+#include "../hard_class/class.h"
 #include "sstream"
 
 TEST_CASE("Simple_Constructors") {
